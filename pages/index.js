@@ -1,32 +1,12 @@
-import Head from 'next/head'
-
+import Meta from '../components/Meta'
 import Nav from '../components/Nav'
-import Container from '../components/Container'
-import Button from '../components/Button'
-import Textarea from '../components/Textarea'
+import Main from '../components/Main'
 
 const IndexPage = () => (
   <div className="flex flex-col h-screen">
-    {/* <Head>
-      <title>AshCo's Text Formatter</title>
-      <link rel="icon" href="/favicon.ico" />
-    </Head> */}
-
+    <Meta/>
     <Nav/>
-    <main className="h-full sm:flex">
-      <Container mode="input">
-        <Textarea />
-        <Button>
-          TOGGLE
-        </Button>
-      </Container>
-      <Container mode="output">
-        <Textarea />
-        <Button type='primary'>
-          COPY
-        </Button>
-      </Container>
-    </main>
+    <Main />
   </div>
 
 )
