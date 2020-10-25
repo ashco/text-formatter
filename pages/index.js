@@ -1,6 +1,9 @@
 import Head from 'next/head'
 
-// import Layout from '../components/Layout'
+import Nav from '../components/Nav'
+import Container from '../components/Container'
+import Button from '../components/Button'
+import Textarea from '../components/Textarea'
 
 const IndexPage = () => (
   <div className="flex flex-col h-screen">
@@ -9,20 +12,21 @@ const IndexPage = () => (
       <link rel="icon" href="/favicon.ico" />
     </Head> */}
 
-    <nav className="h-12 bg-gray-500 text-white font-medium text-xl flex items-center justify-around">
-      <h1 className="">TRANSFORMER</h1>
-    </nav>
+    <Nav/>
     <main className="h-full sm:flex">
-      <div className="bg-black min-h-1/2 w-full">
-        Input
-      </div>
-      <div className="bg-white min-h-1/2 w-full">
-        Output
-      </div>
+      <Container mode="input">
+        <Textarea />
+        <Button>
+          TOGGLE
+        </Button>
+      </Container>
+      <Container mode="output">
+        <Textarea />
+        <Button type='primary'>
+          COPY
+        </Button>
+      </Container>
     </main>
-    {/* <Layout>
-
-    </Layout> */}
   </div>
 
 )
