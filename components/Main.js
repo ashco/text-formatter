@@ -11,7 +11,7 @@ import { parseVars, formatter } from '../lib/helpers'
 const Main = () => {
   let initInputText = '';
   if (typeof window !== "undefined") {
-    initInputText = window.localStorage.getItem('inputText')
+    initInputText = window.localStorage.getItem('inputText') || ''
   }
 
   const [inputText, setInputText] = React.useState(initInputText);
