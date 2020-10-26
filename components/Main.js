@@ -46,7 +46,9 @@ const Main = () => {
 
   // Parse inputText for $VARIABLE
   React.useEffect(() => {
-    const parsedVars = parseVars('!', inputText)
+    const parsedVars = parseVars('#', inputText)
+
+
 
     if (parsedVars.length) {
       parsedVars.forEach(v => {
@@ -74,16 +76,16 @@ const Main = () => {
   return (
     <main className="h-full sm:flex">
       <Container mode="input">
-        <Textarea value={inputText} handleChange={handleTextareaChange}/>
+        <Textarea value={inputText} placeholder="Input template text here.." handleChange={handleTextareaChange}/>
         {Object.keys(variables).map(v => (
           <InputField key={v} name={v} placeholder={v} handleChange={handleInputChange} />
         ))}
       </Container>
       <Container mode="output">
-        <Button type='primary' onClick={handleCopyText}>
+        <Button onClick={handleCopyText}>
           COPY
         </Button>
-        <Textarea type='output' disabled={true} value={outputText}/>
+        <Textarea type='output' placeholder="Formatted text outputs here.." disabled={true} value={outputText}/>
       </Container>
     </main>
   )
