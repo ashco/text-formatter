@@ -1,7 +1,5 @@
 ﻿import React from 'react'
 
-import Container from './Container'
-import Button from './Button'
 import Textarea from './Textarea'
 import InputField from './InputField'
 
@@ -74,34 +72,20 @@ const Main = () => {
   }, [inputText, variables])
 
   return (
-    <main className="h-full sm:flex justify-between bg-gray-900">
-      <Container>
-        <Textarea value={inputText} placeholder="Input template text here.." handleChange={handleTextareaChange}/>
-      </Container>
-      <Container type="center">
-        <h1 className="text-white font-medium text-2xl">TRANSFORMER</h1>
-        {Object.keys(variables).map(v => (
-          <InputField key={v} name={v} placeholder={v} handleChange={handleInputChange} />
-        ))}
-        <Button onClick={handleCopyText}>
-          COPY
-        </Button>
-      </Container>
-      <Container>
-        <Textarea type='output' placeholder="Formatted text outputs here.." disabled={true} value={outputText}/>
-      </Container>
-      {/* <Container mode="input">
-        <Textarea value={inputText} placeholder="Input template text here.." handleChange={handleTextareaChange}/>
-        {Object.keys(variables).map(v => (
-          <InputField key={v} name={v} placeholder={v} handleChange={handleInputChange} />
-        ))}
-      </Container>
-      <Container mode="output">
-        <Button onClick={handleCopyText}>
-          COPY
-        </Button>
-        <Textarea type='output' placeholder="Formatted text outputs here.." disabled={true} value={outputText}/>
-      </Container> */}
+    <main className="grid grid-rows-mobile sm:grid-rows-desktop sm:grid-cols-desktop">
+      <Textarea value={inputText} placeholder="Input here.." handleChange={handleTextareaChange}/>
+      <div className="min-h-30 flex flex-col justify-between sm:m-4">
+        <h1 className="text-white font-medium text-2xl text-center my-2">TRANSFORMER</h1>
+        <div className="flex flex-col space-y-2">
+            {Object.keys(variables).map(v => (
+              <InputField key={v} name={v} placeholder={v} handleChange={handleInputChange} />
+            ))}
+          <button onClick={handleCopyText} className="bg-orange-600 hover:bg-orange-700 focus:bg-orange-700 text-white flex items-center justify-around w-full h-12 font-medium text-lg">
+            COPY
+          </button>
+        </div>
+      </div>
+      <Textarea type='output' placeholder="Output here.." disabled={true} value={outputText}/>
     </main>
   )
 }

@@ -5,13 +5,21 @@ module.exports = {
   theme: {
     extend: {
       height: {
-        '30': '30%',
-        '35': '35%',
+        '30': '30vh',
+        '35': '35vh',
       },
       minHeight: {
+        '30': '30vh',
         '1/4': '25%',
         '1/2': '50%',
         '3/4': '75%',
+      },
+      gridTemplateRows: {
+        'mobile': '35vh 1fr 35vh',
+        'desktop': '100vh'
+      },
+      gridTemplateColumns: {
+        'desktop': '1fr 280px 1fr',
       }
     },
   },
