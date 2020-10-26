@@ -9,16 +9,23 @@ import { parseVars, formatter } from '../lib/helpers'
 
 
 const Main = () => {
-  const [inputText, setInputText] = React.useState('Starter text to save $$time for me.');
+  let initInputText = '';
+  if (typeof window !== "undefined") {
+    initInputText = window.localStorage.getItem('inputText')
+  }
+
+  const [inputText, setInputText] = React.useState(initInputText);
   const [outputText, setOutputText] = React.useState('');
 
-  const [variables, setVariables] = React.useState({
-    "$$VAR1": ''
-  });
+  const [variables, setVariables] = React.useState({});
 
   const handleTextareaChange = (e) => {
     const { value } = e.target;
+
     setInputText(value);
+    if (typeof window !== "undefined") {
+      window.localStorage.setItem('inputText', value);
+    }
   }
 
   const handleInputChange = (e) => {
@@ -28,6 +35,13 @@ const Main = () => {
       [name]: value
     })
 
+  }
+
+  const handleCopyText = () => {
+    navigator.clipboard.writeText(outputText).then(
+      (res) => console.log('Copy success!'),
+      (err) => console.log('Copy failure!')
+    )
   }
 
   // Parse inputText for $VARIABLE
@@ -66,7 +80,7 @@ const Main = () => {
         ))}
       </Container>
       <Container mode="output">
-        <Button type='primary'>
+        <Button type='primary' onClick={handleCopyText}>
           COPY
         </Button>
         <Textarea type='output' disabled={true} value={outputText}/>
