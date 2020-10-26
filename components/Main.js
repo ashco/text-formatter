@@ -9,10 +9,12 @@ import { parseVars, formatter } from '../lib/helpers'
 
 
 const Main = () => {
-  const [inputText, setInputText] = React.useState('');
+  const [inputText, setInputText] = React.useState('Starter text to save $$time for me.');
   const [outputText, setOutputText] = React.useState('');
 
-  const [variables, setVariables] = React.useState({});
+  const [variables, setVariables] = React.useState({
+    "$$VAR1": ''
+  });
 
   const handleTextareaChange = (e) => {
     const { value } = e.target;
@@ -30,7 +32,7 @@ const Main = () => {
 
   // Parse inputText for $VARIABLE
   React.useEffect(() => {
-    const parsedVars = parseVars('$$', inputText)
+    const parsedVars = parseVars('!', inputText)
 
     if (parsedVars.length) {
       parsedVars.forEach(v => {
@@ -50,10 +52,10 @@ const Main = () => {
 
   // Listen for value changes and update the output text field
   React.useEffect(() => {
-    const newOutputText = formatter(inputText)
+    const newOutputText = formatter(inputText, variables)
 
     setOutputText(newOutputText)
-  }, [inputText])
+  }, [inputText, variables])
 
   return (
     <main className="h-full sm:flex">
