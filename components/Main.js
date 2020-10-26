@@ -31,8 +31,6 @@ const Main = () => {
     } else {
       varSet.clear()
     }
-
-    console.log(parsedVars, '|', varSet)
   }, [inputText])
 
   return (
@@ -42,15 +40,12 @@ const Main = () => {
         {Array.from(varSet).map(variable => (
           <InputField key={variable} placeholder={variable} />
         ))}
-        <Button>
-          TOGGLE
-        </Button>
       </Container>
       <Container mode="output">
-        <Textarea disabled={true} value={outputText}/>
         <Button type='primary'>
           COPY
         </Button>
+        <Textarea type='output' disabled={true} value={outputText}/>
       </Container>
     </main>
   )

@@ -1,8 +1,6 @@
-﻿const Textarea = ({value, disabled = false, handleChange}) => {
+﻿const Textarea = ({className, type, value, disabled = false, handleChange}) => {
   return (
-    <div className="w-vw">
-      <textarea onChange={handleChange} value={value} disabled={disabled} className="border-4 border-black w-full h-48" />
-    </div>
+      <textarea onChange={handleChange} value={value} disabled={disabled} className={`${type == 'output' ? 'border-4 border-black' : ''}  w-full h-48`} />
   )
 }
 
