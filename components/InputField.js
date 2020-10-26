@@ -1,8 +1,6 @@
-﻿const InputField = ({placeholder, value, handleChange}) => {
+﻿const InputField = ({placeholder, name, value, handleChange}) => {
   return (
-    <div className="w-vw">
-      <input placeholder={placeholder} onChange={handleChange} value={value} className="w-full h-12" />
-    </div>
+      <input placeholder={placeholder} name={name} onChange={handleChange} value={value} className="w-full h-12" />
   )
 }
 
