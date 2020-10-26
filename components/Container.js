@@ -1,9 +1,9 @@
 ﻿import Textarea from './Textarea'
 import Button from './Button'
 
-const Container = ({mode, children}) => {
+const Container = ({type, mode, children}) => {
   return (
-    <div className={`${mode === 'input' ? 'bg-black' : ''} ${mode === 'output' ? 'sm:flex-col-reverse sm:space-y-reverse justify-end' : ''} w-full p-2 flex flex-col p-2 space-y-2`}>
+    <div className={`w-full p-2 flex flex-col p-3 items-center space-y-3 justify-between sm:h-full sm:p-4 ${type == 'center' ? 'h-30 sm:w-64' : 'h-35'}`}>
       {children}
     </div>
   )

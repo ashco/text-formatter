@@ -3,7 +3,7 @@
 const Nav = () => {
   return (
     <nav className="h-16 bg-gray-500 text-white font-medium text-2xl flex items-center justify-around">
-      <h1 className="">TRANSFORMER</h1>
+      <h1>TRANSFORMER</h1>
     </nav>
   )
 }

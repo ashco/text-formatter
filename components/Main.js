@@ -74,8 +74,23 @@ const Main = () => {
   }, [inputText, variables])
 
   return (
-    <main className="h-full sm:flex">
-      <Container mode="input">
+    <main className="h-full sm:flex justify-between bg-gray-900">
+      <Container>
+        <Textarea value={inputText} placeholder="Input template text here.." handleChange={handleTextareaChange}/>
+      </Container>
+      <Container type="center">
+        <h1 className="text-white font-medium text-2xl">TRANSFORMER</h1>
+        {Object.keys(variables).map(v => (
+          <InputField key={v} name={v} placeholder={v} handleChange={handleInputChange} />
+        ))}
+        <Button onClick={handleCopyText}>
+          COPY
+        </Button>
+      </Container>
+      <Container>
+        <Textarea type='output' placeholder="Formatted text outputs here.." disabled={true} value={outputText}/>
+      </Container>
+      {/* <Container mode="input">
         <Textarea value={inputText} placeholder="Input template text here.." handleChange={handleTextareaChange}/>
         {Object.keys(variables).map(v => (
           <InputField key={v} name={v} placeholder={v} handleChange={handleInputChange} />
@@ -86,7 +101,7 @@ const Main = () => {
           COPY
         </Button>
         <Textarea type='output' placeholder="Formatted text outputs here.." disabled={true} value={outputText}/>
-      </Container>
+      </Container> */}
     </main>
   )
 }

@@ -4,6 +4,10 @@ module.exports = {
   purge: ['./pages/**/*.{js,jsx}', './components/**/*.{js,jsx}'],
   theme: {
     extend: {
+      height: {
+        '30': '30%',
+        '35': '35%',
+      },
       minHeight: {
         '1/4': '25%',
         '1/2': '50%',

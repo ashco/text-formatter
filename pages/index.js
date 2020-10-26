@@ -5,7 +5,7 @@ import Main from '../components/Main'
 const IndexPage = () => (
   <div className="flex flex-col h-screen">
     <Meta/>
-    <Nav/>
+    {/* <Nav/> */}
     <Main />
   </div>
 
