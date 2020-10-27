@@ -5,7 +5,6 @@ import InputField from './InputField'
 
 import { parseVars, formatter } from '../lib/helpers'
 
-
 const Main = () => {
   let initInputText = '';
   if (typeof window !== "undefined") {
@@ -14,8 +13,8 @@ const Main = () => {
 
   const [inputText, setInputText] = React.useState(initInputText);
   const [outputText, setOutputText] = React.useState('');
-
   const [variables, setVariables] = React.useState({});
+  const [copyStatus, setCopyStatus] = React.useState(null);
 
   const handleTextareaChange = (e) => {
     const { value } = e.target;
@@ -32,25 +31,29 @@ const Main = () => {
       ...variables,
       [name]: value
     })
+  }
 
+  const handleCopyStatus = (statusText) => {
+    setCopyStatus(statusText)
+    setTimeout(() => {
+      setCopyStatus(null)
+    }, 1000)
   }
 
   const handleCopyText = () => {
     navigator.clipboard.writeText(outputText).then(
-      (res) => console.log('Copy success!'),
-      (err) => console.log('Copy failure!')
+      (res) => handleCopyStatus('COPIED!'),
+      (err) => handleCopyStatus('ERROR!')
     )
   }
 
   // Parse inputText for $VARIABLE
   React.useEffect(() => {
-    const parsedVars = parseVars('#', inputText)
-
-
+    const parsedVars = parseVars('{{', '}}', inputText)
 
     if (parsedVars.length) {
       parsedVars.forEach(v => {
-        if (!variables[v] && variables[v] != '') {
+        if (variables[v] === undefined) {
           variables[v] = '';
         }
       })
@@ -62,6 +65,8 @@ const Main = () => {
     } else {
       setVariables({});
     }
+
+    console.log(variables)
   }, [inputText])
 
   // Listen for value changes and update the output text field
@@ -79,14 +84,14 @@ const Main = () => {
           <a href="https://ashco.io" target="_blank"><img className="h-12 w-12" src="/ashco-icon-white.svg" alt="AshCo Icon"/></a>
           <h1 className="text-white font-medium text-2xl my-2">Text Formatter</h1>
         </span>
-        <div className="flex flex-col space-y-4">
+        <div className="flex flex-col">
           <div className="flex flex-col space-y-2">
             {Object.keys(variables).map(v => (
               <InputField key={v} name={v} placeholder={v} handleChange={handleInputChange} />
               ))}
           </div>
-          <button onClick={handleCopyText} className="bg-orange-600 hover:bg-orange-700 focus:bg-orange-700 text-white flex items-center justify-around w-full h-12 font-medium text-lg">
-            COPY
+          <button onClick={handleCopyText} className="bg-orange-600 hover:bg-orange-700 focus:bg-orange-700 text-white flex items-center justify-around w-full h-12 font-medium text-lg my-3">
+            {copyStatus || 'COPY'}
           </button>
         </div>
       </div>
