@@ -2,7 +2,6 @@
 
 import Textarea from './Textarea'
 import InputField from './InputField'
-import Modal from './Modal'
 
 
 import { parseVars, formatter } from '../lib/helpers'
@@ -18,7 +17,10 @@ const Main = () => {
   const [variables, setVariables] = React.useState({});
   const [copyStatus, setCopyStatus] = React.useState(null);
   const [isHighlighted, setIsHighlighted] = React.useState(true);
-  const [isModalOpen, setIsModalOpen] = React.useState(false);
+
+  const wrapperRef = React.useRef(null);
+  const overlayRef = React.useRef(null);
+  const textareaRef = React.useRef(null);
 
   const handleTextareaChange = (e) => {
     const { value } = e.target;
@@ -55,6 +57,13 @@ const Main = () => {
     setIsHighlighted(!isHighlighted);
   }
 
+  const handleScroll = () => {
+    if (wrapperRef.current && textareaRef.current) {
+      const target = textareaRef.current.scrollTop;
+      wrapperRef.current.scrollTop = target;
+    }
+  }
+
   // Parse inputText for $VARIABLE
   React.useEffect(() => {
     const parsedVars = parseVars(inputText)
@@ -73,7 +82,6 @@ const Main = () => {
     } else {
       setVariables({});
     }
-
   }, [inputText])
 
   // Listen for value changes and update the output text field
@@ -85,11 +93,8 @@ const Main = () => {
 
 
   // Highlight handling
-  const overlayRef = React.useRef(null);
-  const textareaRef = React.useRef(null);
   React.useEffect(() => {
     if (isHighlighted) {
-
       const newText = inputText
       .replace(/{(\S*?)}/g, '<mark class="bg-orange-500 rounded-sm opacity-50">$&</mark>');
 
@@ -99,23 +104,6 @@ const Main = () => {
     }
   }, [inputText, isHighlighted])
 
-
-
-
-  const wrapperRef = React.useRef(null);
-
-  const handleScroll = () => {
-    if (wrapperRef.current && textareaRef.current) {
-      const target = textareaRef.current.scrollTop;
-
-      console.log(textareaRef.current.scrollTop)
-      console.log(wrapperRef.current.scrollTop)
-      wrapperRef.current.scrollTop = target;
-    }
-  }
-
-  // const filledForm = Object.values(variables).every(v => v.length);
-
   return (
     <main className="grid grid-rows-mobile sm:grid-rows-desktop sm:grid-cols-desktop h-screen">
       <div className="bg-white min-h-30 relative">
@@ -124,14 +112,13 @@ const Main = () => {
             {inputText}
           </div>
         </div>
-        <Textarea ref={textareaRef} handleScroll={handleScroll} value={inputText} placeholder="Input here..&#10;|&#10;----------Commands----------&#10;|&#10;{VARIABLE}&#10;Specify text replace variables. Variable names can be repeated.&#10;|&#10;!DATE&#10;Insert current date.&#10;" handleChange={handleTextareaChange}/>
+        <Textarea ref={textareaRef} handleScroll={handleScroll} value={inputText} placeholder="Input here..&#10;.&#10;----- Formatting Commands -----&#10;.&#10;{VARIABLE}&#10;Specify text replace variables. Variable names can be repeated.&#10;.&#10;!DATE&#10;Insert current date.&#10;" handleChange={handleTextareaChange}/>
       </div>
       <div className="flex flex-col justify-between m-4 shadow-sm space-y-4">
         <span className="flex justify-center space-x-1">
           <a href="https://ashco.io" target="_blank"><img className="h-12 w-12" src="/ashco-icon-white.svg" alt="AshCo Icon"/></a>
           <h1 className="text-white font-medium text-2xl my-2">Text Formatter</h1>
         </span>
-        {/* <button onClick={() => setIsModalOpen(!isModalOpen)}>Toggle Modal</button> */}
         {Object.keys(variables).length > 0 && (<div className="flex flex-col space-y-2">
           {Object.keys(variables).map(v => (
             <InputField key={v} name={v} placeholder={v} handleChange={handleInputChange} />
@@ -145,16 +132,6 @@ const Main = () => {
       <div className="bg-gray-400 min-h-30">
         <Textarea type='output' placeholder="Output here.." disabled={true} value={outputText}/>
       </div>
-      {/* <Modal isOpen={isModalOpen}>
-        <div className="z-50 bg-black opacity-75 fixed h-full w-full justify-center grid top-0 left-0 content-center">
-          <div className="bg-gray-900 opacity-100 text-white p-4">
-            <h2>Directions</h2>
-            <p>1. Write the text you would like to transform to the input field.</p>
-            <p>{`2. Wrap any variables that you would like to change with curly brackets. Example: {VARIABLE}`}</p>
-
-          </div>
-        </div>
-      </Modal> */}
     </main>
   )
 }
