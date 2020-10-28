@@ -1,5 +1,4 @@
 import Meta from '../components/Meta'
-import Nav from '../components/Nav'
 import Main from '../components/Main'
 
 const IndexPage = () => (

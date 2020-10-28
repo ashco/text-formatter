@@ -15,6 +15,7 @@ const Main = () => {
   const [outputText, setOutputText] = React.useState('');
   const [variables, setVariables] = React.useState({});
   const [copyStatus, setCopyStatus] = React.useState(null);
+  const [isHighlighted, setIsHighlighted] = React.useState(true);
 
   const handleTextareaChange = (e) => {
     const { value } = e.target;
@@ -47,9 +48,13 @@ const Main = () => {
     )
   }
 
+  const toggleHighlights = () => {
+    setIsHighlighted(!isHighlighted);
+  }
+
   // Parse inputText for $VARIABLE
   React.useEffect(() => {
-    const parsedVars = parseVars('{{', '}}', inputText)
+    const parsedVars = parseVars(inputText)
 
     if (parsedVars.length) {
       parsedVars.forEach(v => {
@@ -75,27 +80,48 @@ const Main = () => {
     setOutputText(newOutputText)
   }, [inputText, variables])
 
-  const overlayRef = React.useRef(null);
 
   // Highlight handling
+  const overlayRef = React.useRef(null);
+  const textareaRef = React.useRef(null);
   React.useEffect(() => {
-    const newText = inputText
-      .replace(/{{(.*?)}}/g, '<mark class="bg-orange-500 rounded-sm opacity-50">$&</mark>');
+    if (isHighlighted) {
 
-    overlayRef.current.innerHTML = newText;
-  }, [inputText])
+      const newText = inputText
+      .replace(/{(.*?)}/g, '<mark class="bg-orange-500 rounded-sm opacity-50">$&</mark>');
 
-  const filledForm = Object.values(variables).every(v => v.length);
+      overlayRef.current.innerHTML = newText;
+    } else {
+      overlayRef.current.innerHTML = inputText;
+    }
+  }, [inputText, isHighlighted])
+
+
+
+
+  const wrapperRef = React.useRef(null);
+
+  const handleScroll = () => {
+    if (wrapperRef.current && textareaRef.current) {
+      const target = textareaRef.current.scrollTop;
+
+      console.log(textareaRef.current.scrollTop)
+      console.log(wrapperRef.current.scrollTop)
+      wrapperRef.current.scrollTop = target;
+    }
+  }
+
+  // const filledForm = Object.values(variables).every(v => v.length);
 
   return (
     <main className="grid grid-rows-mobile sm:grid-rows-desktop sm:grid-cols-desktop h-screen">
-      <div className="bg-white min-h-30">
-        <div className="overflow-auto absolute p-2 text-transparent pointer-events-none">
-          <div ref={overlayRef} className="break-words whitespace-pre-wrap">
+      <div className="bg-white min-h-30 relative">
+        <div ref={wrapperRef}className="absolute p-2 text-transparent pointer-events-none h-full w-full overflow-hidden pb-24">
+          <div ref={overlayRef} className="break-words whitespace-pre-wrap pb-24">
             {inputText}
           </div>
         </div>
-        <Textarea value={inputText} placeholder="Input here.." handleChange={handleTextareaChange}/>
+        <Textarea ref={textareaRef} handleScroll={handleScroll} value={inputText} placeholder="Input here.." handleChange={handleTextareaChange}/>
       </div>
       <div className="flex flex-col justify-between m-4 shadow-sm space-y-4">
         <span className="flex justify-center space-x-1">
@@ -106,6 +132,7 @@ const Main = () => {
           {Object.keys(variables).map(v => (
             <InputField key={v} name={v} placeholder={v} handleChange={handleInputChange} />
             ))}
+            <label className="text-white text-center" htmlFor="highlights">Highlights<input id="highlights" name="highlights" type="checkbox" className="m-2 color-red" onChange={toggleHighlights} checked={isHighlighted}/></label>
         </div>)}
         <button onClick={handleCopyText} className="bg-orange-600 hover:bg-orange-700 focus:bg-orange-700 text-white flex items-center justify-around w-full h-12 font-medium text-lg disabled:bg-gray-600">
           {copyStatus || 'COPY'}
