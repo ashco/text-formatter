@@ -8,7 +8,7 @@ import { parseVars, formatter } from '../lib/helpers'
 const Main = () => {
   let initInputText = '';
   if (typeof window !== "undefined") {
-    initInputText = window.localStorage.getItem('inputText') || ''
+    initInputText = window.localStorage.getItem('inputText')
   }
 
   const [inputText, setInputText] = React.useState(initInputText);
@@ -66,7 +66,6 @@ const Main = () => {
       setVariables({});
     }
 
-    console.log(variables)
   }, [inputText])
 
   // Listen for value changes and update the output text field
@@ -76,9 +75,29 @@ const Main = () => {
     setOutputText(newOutputText)
   }, [inputText, variables])
 
+  const overlayRef = React.useRef(null);
+
+  // Highlight handling
+  React.useEffect(() => {
+    const newText = inputText
+      .replace(/{{(.*?)}}/g, '<mark class="bg-orange-500 rounded-sm opacity-50">$&</mark>');
+
+    overlayRef.current.innerHTML = newText;
+  }, [inputText])
+
+
+  const formComplete = Object.values(variables).every(v => v.length);
+
   return (
     <main className="grid grid-rows-mobile sm:grid-rows-desktop sm:grid-cols-desktop">
-      <Textarea value={inputText} placeholder="Input here.." handleChange={handleTextareaChange}/>
+      <div className="bg-white">
+        <div className="overflow-auto absolute p-2 text-transparent pointer-events-none">
+          <div ref={overlayRef} className="break-words whitespace-pre-wrap">
+            {inputText}
+          </div>
+        </div>
+        <Textarea value={inputText} placeholder="Input here.." handleChange={handleTextareaChange}/>
+      </div>
       <div className="min-h-30 flex flex-col justify-between sm:m-4">
         <span className="flex justify-center my-4 space-x-1">
           <a href="https://ashco.io" target="_blank"><img className="h-12 w-12" src="/ashco-icon-white.svg" alt="AshCo Icon"/></a>
@@ -90,12 +109,14 @@ const Main = () => {
               <InputField key={v} name={v} placeholder={v} handleChange={handleInputChange} />
               ))}
           </div>
-          <button onClick={handleCopyText} className="bg-orange-600 hover:bg-orange-700 focus:bg-orange-700 text-white flex items-center justify-around w-full h-12 font-medium text-lg my-3">
+          <button onClick={handleCopyText} disabled={!formComplete} className="bg-orange-600 hover:bg-orange-700 focus:bg-orange-700 text-white flex items-center justify-around w-full h-12 font-medium text-lg my-3">
             {copyStatus || 'COPY'}
           </button>
         </div>
       </div>
-      <Textarea type='output' placeholder="Output here.." disabled={true} value={outputText}/>
+      <div className="bg-gray-300">
+        <Textarea type='output' placeholder="Output here.." disabled={true} value={outputText}/>
+      </div>
     </main>
   )
 }
