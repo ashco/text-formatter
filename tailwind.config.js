@@ -15,7 +15,7 @@ module.exports = {
         '3/4': '75%',
       },
       gridTemplateRows: {
-        'mobile': '35vh 1fr 35vh',
+        'mobile': '1fr auto 1fr',
         'desktop': '100vh'
       },
       gridTemplateColumns: {
@@ -23,7 +23,9 @@ module.exports = {
       }
     },
   },
-  variants: {},
+  variants: {
+    backgroundColor: ['responsive', 'hover', 'focus', 'disabled'],
+  },
   plugins: [
     plugin(function({ addComponents }) {
       const buttons = {

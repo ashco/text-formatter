@@ -8,7 +8,7 @@ import { parseVars, formatter } from '../lib/helpers'
 const Main = () => {
   let initInputText = '';
   if (typeof window !== "undefined") {
-    initInputText = window.localStorage.getItem('inputText')
+    initInputText = window.localStorage.getItem('inputText') || '';
   }
 
   const [inputText, setInputText] = React.useState(initInputText);
@@ -85,12 +85,11 @@ const Main = () => {
     overlayRef.current.innerHTML = newText;
   }, [inputText])
 
-
-  const formComplete = Object.values(variables).every(v => v.length);
+  const filledForm = Object.values(variables).every(v => v.length);
 
   return (
-    <main className="grid grid-rows-mobile sm:grid-rows-desktop sm:grid-cols-desktop">
-      <div className="bg-white">
+    <main className="grid grid-rows-mobile sm:grid-rows-desktop sm:grid-cols-desktop h-screen">
+      <div className="bg-white min-h-30">
         <div className="overflow-auto absolute p-2 text-transparent pointer-events-none">
           <div ref={overlayRef} className="break-words whitespace-pre-wrap">
             {inputText}
@@ -98,23 +97,21 @@ const Main = () => {
         </div>
         <Textarea value={inputText} placeholder="Input here.." handleChange={handleTextareaChange}/>
       </div>
-      <div className="min-h-30 flex flex-col justify-between m-4">
-        <span className="flex justify-center mb-4 space-x-1">
+      <div className="flex flex-col justify-between m-4 shadow-sm space-y-4">
+        <span className="flex justify-center space-x-1">
           <a href="https://ashco.io" target="_blank"><img className="h-12 w-12" src="/ashco-icon-white.svg" alt="AshCo Icon"/></a>
           <h1 className="text-white font-medium text-2xl my-2">Text Formatter</h1>
         </span>
-        <div className="flex flex-col">
-          <div className="flex flex-col space-y-2">
-            {Object.keys(variables).map(v => (
-              <InputField key={v} name={v} placeholder={v} handleChange={handleInputChange} />
-              ))}
-          </div>
-          <button onClick={handleCopyText} disabled={!formComplete} className="bg-orange-600 hover:bg-orange-700 focus:bg-orange-700 text-white flex items-center justify-around w-full h-12 font-medium text-lg mt-3">
-            {copyStatus || 'COPY'}
-          </button>
-        </div>
+        {Object.keys(variables).length > 0 && (<div className="flex flex-col space-y-2">
+          {Object.keys(variables).map(v => (
+            <InputField key={v} name={v} placeholder={v} handleChange={handleInputChange} />
+            ))}
+        </div>)}
+        <button onClick={handleCopyText} className="bg-orange-600 hover:bg-orange-700 focus:bg-orange-700 text-white flex items-center justify-around w-full h-12 font-medium text-lg disabled:bg-gray-600">
+          {copyStatus || 'COPY'}
+        </button>
       </div>
-      <div className="bg-gray-300">
+      <div className="bg-gray-400 min-h-30">
         <Textarea type='output' placeholder="Output here.." disabled={true} value={outputText}/>
       </div>
     </main>
