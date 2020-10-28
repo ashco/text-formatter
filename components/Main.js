@@ -98,8 +98,8 @@ const Main = () => {
         </div>
         <Textarea value={inputText} placeholder="Input here.." handleChange={handleTextareaChange}/>
       </div>
-      <div className="min-h-30 flex flex-col justify-between sm:m-4">
-        <span className="flex justify-center my-4 space-x-1">
+      <div className="min-h-30 flex flex-col justify-between m-4">
+        <span className="flex justify-center mb-4 space-x-1">
           <a href="https://ashco.io" target="_blank"><img className="h-12 w-12" src="/ashco-icon-white.svg" alt="AshCo Icon"/></a>
           <h1 className="text-white font-medium text-2xl my-2">Text Formatter</h1>
         </span>
@@ -109,7 +109,7 @@ const Main = () => {
               <InputField key={v} name={v} placeholder={v} handleChange={handleInputChange} />
               ))}
           </div>
-          <button onClick={handleCopyText} disabled={!formComplete} className="bg-orange-600 hover:bg-orange-700 focus:bg-orange-700 text-white flex items-center justify-around w-full h-12 font-medium text-lg my-3">
+          <button onClick={handleCopyText} disabled={!formComplete} className="bg-orange-600 hover:bg-orange-700 focus:bg-orange-700 text-white flex items-center justify-around w-full h-12 font-medium text-lg mt-3">
             {copyStatus || 'COPY'}
           </button>
         </div>
