@@ -2,6 +2,7 @@
 
 import Textarea from './Textarea'
 import InputField from './InputField'
+import SelectField from './SelectField'
 
 
 import { parseVars, formatter } from '../lib/helpers'
@@ -96,7 +97,8 @@ const Main = () => {
   React.useEffect(() => {
     if (isHighlighted) {
       const newText = inputText
-      .replace(/{(\S*?)}/g, '<mark class="bg-orange-500 rounded-sm opacity-50">$&</mark>');
+      .replace(/{(.*?)}/g, '<mark class="bg-orange-500 rounded-sm opacity-50">$&</mark>')
+      .replace(/!DATE/ig, '<mark class="bg-orange-500 rounded-sm opacity-50">$&</mark>')
 
       overlayRef.current.innerHTML = newText;
     } else {
@@ -112,7 +114,7 @@ const Main = () => {
             {inputText}
           </div>
         </div>
-        <Textarea ref={textareaRef} handleScroll={handleScroll} value={inputText} placeholder="Input here..&#10;.&#10;----- Formatting Commands -----&#10;.&#10;{VARIABLE}&#10;Specify text replace variables. Variable names can be repeated.&#10;.&#10;!DATE&#10;Insert current date.&#10;" handleChange={handleTextareaChange}/>
+        <Textarea ref={textareaRef} handleScroll={handleScroll} value={inputText} placeholder="Input here..&#10;.&#10;----- Formatting Commands -----&#10;.&#10;{INPUT_VARIABLE}&#10;Specify text replace location.&#10;.&#10;{SELECT_VAR_1&amp;SELECT_VAR_2}&#10;Use &amp; to create select list of input variables.&#10;.&#10;!DATE&#10;Insert current date.&#10;" handleChange={handleTextareaChange}/>
       </div>
       <div className="flex flex-col justify-between m-4 shadow-sm space-y-4">
         <span className="flex justify-center space-x-1">
@@ -120,10 +122,13 @@ const Main = () => {
           <h1 className="text-white font-medium text-2xl my-2">Text Formatter</h1>
         </span>
         {Object.keys(variables).length > 0 && (<div className="flex flex-col space-y-2">
-          {Object.keys(variables).map(v => (
-            <InputField key={v} name={v} placeholder={v} handleChange={handleInputChange} />
-            ))}
-            <label className="text-white text-center" htmlFor="highlights">Highlights<input id="highlights" name="highlights" type="checkbox" className="m-2 color-red" onChange={toggleHighlights} checked={isHighlighted}/></label>
+          {Object.keys(variables).map(v => {
+            if (v.includes('&')) {
+              return <SelectField key={v} name={v} handleChange={handleInputChange} />
+            } else {
+              return <InputField key={v} name={v} placeholder={v} handleChange={handleInputChange} />
+          }})}
+          <label className="text-white text-center" htmlFor="highlights">Highlights<input id="highlights" name="highlights" type="checkbox" className="m-2 color-red" onChange={toggleHighlights} checked={isHighlighted}/></label>
         </div>)}
         <button onClick={handleCopyText} className="bg-orange-600 hover:bg-orange-700 focus:bg-orange-700 text-white flex items-center justify-around w-full h-12 font-medium text-lg disabled:bg-gray-600">
           {copyStatus || 'COPY'}
