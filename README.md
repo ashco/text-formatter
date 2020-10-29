@@ -1,3 +1,24 @@
+# AshCo's Text Formatter
+
+This is a simple text formatter application, with a few cool features to boot!
+
+## How to Use
+
+First, input the text that you want to modify into the input field. When no text is present, you can see instructions on how to include variables via placeholder text.
+
+You can insert the following dynamic variables:
+
+- `{INPUT_VARIABLE}` - Wrap a variable name in curly brackets, `{` and `}`, to generate an input field that can be filled in with text to replace in that location.
+- `{SELECT_VARIABLE_1&SELECT_VARIABLE_2}` - You can convert an Input Variable into a Multiple Select Variable by separating variables inside curly brackets with the `&` keyword.
+- `!DATE` - Dynamically generate and insert the current date.
+
+## Feature List
+
+- Input text caching to localStorage.
+- Dynamic variable identification.
+- Variable's are identified and highlighted via RegExp.
+- Mobile First development process.
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started

@@ -4,7 +4,6 @@ import Textarea from './Textarea'
 import InputField from './InputField'
 import SelectField from './SelectField'
 
-
 import { parseVars, formatter } from '../lib/helpers'
 
 const Main = () => {
@@ -108,6 +107,7 @@ const Main = () => {
 
   return (
     <main className="grid grid-rows-mobile sm:grid-rows-desktop sm:grid-cols-desktop h-screen">
+
       <div className="bg-white min-h-30 relative">
         <div ref={wrapperRef}className="absolute p-2 text-transparent pointer-events-none h-full w-full overflow-hidden pb-24">
           <div ref={overlayRef} className="break-words whitespace-pre-wrap pb-24">
@@ -116,6 +116,7 @@ const Main = () => {
         </div>
         <Textarea ref={textareaRef} handleScroll={handleScroll} value={inputText} placeholder="Input here..&#10;.&#10;----- Formatting Commands -----&#10;.&#10;{INPUT_VARIABLE}&#10;Specify text replace location.&#10;.&#10;{SELECT_VAR_1&amp;SELECT_VAR_2}&#10;Use &amp; to create select list of input variables.&#10;.&#10;!DATE&#10;Insert current date.&#10;" handleChange={handleTextareaChange}/>
       </div>
+
       <div className="flex flex-col justify-between m-4 shadow-sm space-y-4">
         <span className="flex justify-center space-x-1">
           <a href="https://ashco.io" target="_blank"><img className="h-12 w-12" src="/ashco-icon-white.svg" alt="AshCo Icon"/></a>
@@ -134,9 +135,11 @@ const Main = () => {
           {copyStatus || 'COPY'}
         </button>
       </div>
+
       <div className="bg-gray-400 min-h-30">
         <Textarea type='output' placeholder="Output here.." disabled={true} value={outputText}/>
       </div>
+
     </main>
   )
 }
