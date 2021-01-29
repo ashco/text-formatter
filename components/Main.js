@@ -113,28 +113,32 @@ const Main = () => {
   }, [inputText, isHighlighted]);
 
   return (
-    <main className="grid grid-rows-mobile lg:grid-rows-desktop lg:grid-cols-desktop h-screen">
-      <div className="bg-white min-h-30 relative">
-        <div
-          ref={wrapperRef}
-          className="absolute p-2 text-transparent pointer-events-none h-full w-full overflow-hidden pb-24"
-        >
+    <main className="grid grid-rows-mobile lg:grid-rows-desktop lg:grid-cols-desktop">
+      <div className="grid grid-rows-desktop-text">
+        <div className="bg-white min-h-30 relative lg:order-2">
           <div
-            ref={overlayRef}
-            className="break-words whitespace-pre-wrap pb-24"
+            ref={wrapperRef}
+            className="absolute p-2 text-transparent pointer-events-none h-full w-full overflow-hidden pb-24"
           >
-            {inputText}
+            <div
+              ref={overlayRef}
+              className="break-words whitespace-pre-wrap pb-24"
+            >
+              {inputText}
+            </div>
           </div>
+          <Textarea
+            ref={textareaRef}
+            handleScroll={handleScroll}
+            value={inputText}
+            placeholder="Input here.."
+            handleChange={handleTextareaChange}
+          />
         </div>
-        <Textarea
-          ref={textareaRef}
-          handleScroll={handleScroll}
-          value={inputText}
-          placeholder="Input here.."
-          handleChange={handleTextareaChange}
-        />
+        <div className="grid justify-center items-center lg:order-1 bg-gray-800">
+          <h3 className="text-white font-medium p-2">INPUT</h3>
+        </div>
       </div>
-
       <div className="flex flex-col justify-between p-4 shadow-sm space-y-4 justify-self-center w-full max-w-lg">
         <span className="flex justify-center space-x-1">
           <a href="https://ashco.io" target="_blank">
@@ -189,14 +193,18 @@ const Main = () => {
           {copyStatus || "COPY"}
         </button>
       </div>
-
-      <div className="bg-gray-400 min-h-30">
-        <Textarea
-          type="output"
-          placeholder="Output here.."
-          disabled={true}
-          value={outputText}
-        />
+      <div className="grid grid-rows-desktop-text">
+        <div className="grid justify-center items-center bg-gray-800">
+          <h3 className="text-white font-medium p-2">OUTPUT</h3>
+        </div>
+        <div className="bg-gray-400 min-h-30">
+          <Textarea
+            type="output"
+            placeholder="Output here.."
+            disabled={true}
+            value={outputText}
+          />
+        </div>
       </div>
     </main>
   );
