@@ -139,21 +139,21 @@ const Main = () => {
           <h3 className="text-white font-medium p-2">INPUT</h3>
         </div>
       </div>
-      <div className="flex flex-col justify-between p-4 shadow-sm space-y-4 justify-self-center w-full max-w-lg">
-        <span className="flex justify-center space-x-1">
-          <a href="https://ashco.io" target="_blank">
-            <img
-              className="h-12 w-12"
-              src="/ashco-icon-white.svg"
-              alt="AshCo Icon"
-            />
-          </a>
-          <h1 className="text-white font-medium text-2xl my-2">
-            Text Formatter
-          </h1>
-        </span>
+      <div className="flex flex-col justify-between p-4 shadow-sm justify-self-center w-full max-w-lg">
         {Object.keys(variables).length > 0 && (
-          <div className="flex flex-col space-y-2 w-full">
+          <div className="grid gap-2 w-full">
+            <span className="flex justify-center space-x-1 pb-2">
+              <a href="https://ashco.io" target="_blank">
+                <img
+                  className="h-12 w-12"
+                  src="/ashco-icon-white.svg"
+                  alt="AshCo Icon"
+                />
+              </a>
+              <h1 className="text-white font-medium text-2xl my-2">
+                Text Formatter
+              </h1>
+            </span>
             {Object.keys(variables).map((v) => {
               if (v.includes("&")) {
                 return (
@@ -184,14 +184,14 @@ const Main = () => {
                 checked={isHighlighted}
               />
             </label>
+            <button
+              onClick={handleCopyText}
+              className="bg-orange-600 hover:bg-orange-700 focus:bg-orange-700 text-white flex items-center justify-around w-full h-12 font-medium text-lg disabled:bg-gray-600 "
+            >
+              {copyStatus || "COPY"}
+            </button>
           </div>
         )}
-        <button
-          onClick={handleCopyText}
-          className="bg-orange-600 hover:bg-orange-700 focus:bg-orange-700 text-white flex items-center justify-around w-full h-12 font-medium text-lg disabled:bg-gray-600 "
-        >
-          {copyStatus || "COPY"}
-        </button>
       </div>
       <div className="grid grid-rows-desktop-text">
         <div className="grid justify-center items-center bg-gray-800">
