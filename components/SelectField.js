@@ -1,11 +1,10 @@
-﻿const SelectField = ({ name, value, handleChange }) => {
+﻿const SelectField = ({ name, handleChange }) => {
   const options = name.substring(1, name.length - 1).split("&");
 
   return (
     <select
       name={name}
       onChange={handleChange}
-      value={value}
       className="w-full h-12 p-2 placeholder-gray-800 rounded-none"
     >
       <option val=""></option>

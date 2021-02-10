@@ -87,7 +87,7 @@ const Main = () => {
   }, [inputText]);
 
   // Listen for value changes and update the output text field
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
     const newOutputText = formatter(inputText, variables);
 
     setOutputText(newOutputText);
