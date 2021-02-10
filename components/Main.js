@@ -113,8 +113,8 @@ const Main = () => {
   }, [inputText, isHighlighted]);
 
   return (
-    <main className="grid grid-rows-mobile lg:grid-rows-desktop lg:grid-cols-desktop">
-      <div className="grid grid-rows-desktop-text">
+    <main className="grid grid-rows-mobile lg:grid-rows-desktop lg:grid-cols-desktop min-h-screen">
+      <div className="grid grid-rows-desktop-text-input lg:grid-rows-desktop-text-output">
         <div className="bg-white min-h-30 relative lg:order-2">
           <div
             ref={wrapperRef}
@@ -140,60 +140,62 @@ const Main = () => {
         </div>
       </div>
       <div className="flex flex-col justify-between p-4 shadow-sm justify-self-center w-full max-w-lg">
-        {Object.keys(variables).length > 0 && (
-          <div className="grid gap-2 w-full">
-            <span className="flex justify-center space-x-1 pb-2">
-              <a href="https://ashco.io" target="_blank">
-                <img
-                  className="h-12 w-12"
-                  src="/ashco-icon-white.svg"
-                  alt="AshCo Icon"
-                />
-              </a>
-              <h1 className="text-white font-medium text-2xl my-2">
-                Text Formatter
-              </h1>
-            </span>
-            {Object.keys(variables).map((v) => {
-              if (v.includes("&")) {
-                return (
-                  <SelectField
-                    key={v}
-                    name={v}
-                    handleChange={handleInputChange}
-                  />
-                );
-              } else {
-                return (
-                  <InputField
-                    key={v}
-                    name={v}
-                    handleChange={handleInputChange}
-                  />
-                );
-              }
-            })}
-            <label className="text-white text-center" htmlFor="highlights">
-              Highlights
-              <input
-                id="highlights"
-                name="highlights"
-                type="checkbox"
-                className="m-2 color-red"
-                onChange={toggleHighlights}
-                checked={isHighlighted}
+        <div className="grid gap-2 w-full h-full content-between">
+          <span className="flex justify-center space-x-1 pb-2">
+            <a href="https://ashco.io" target="_blank">
+              <img
+                className="h-12 w-12"
+                src="/ashco-icon-white.svg"
+                alt="AshCo Icon"
               />
-            </label>
-            <button
-              onClick={handleCopyText}
-              className="bg-orange-600 hover:bg-orange-700 focus:bg-orange-700 text-white flex items-center justify-around w-full h-12 font-medium text-lg disabled:bg-gray-600 "
-            >
-              {copyStatus || "COPY"}
-            </button>
-          </div>
-        )}
+            </a>
+            <h1 className="text-white font-medium text-2xl my-2">
+              Text Formatter
+            </h1>
+          </span>
+          {Object.keys(variables).length > 0 && (
+            <div className="grid gap-2 w-full h-full content-between">
+              {Object.keys(variables).map((v) => {
+                if (v.includes("&")) {
+                  return (
+                    <SelectField
+                      key={v}
+                      name={v}
+                      handleChange={handleInputChange}
+                    />
+                  );
+                } else {
+                  return (
+                    <InputField
+                      key={v}
+                      name={v}
+                      handleChange={handleInputChange}
+                    />
+                  );
+                }
+              })}
+              <label className="text-white text-center" htmlFor="highlights">
+                Highlights
+                <input
+                  id="highlights"
+                  name="highlights"
+                  type="checkbox"
+                  className="m-2 color-red"
+                  onChange={toggleHighlights}
+                  checked={isHighlighted}
+                />
+              </label>
+            </div>
+          )}
+          <button
+            onClick={handleCopyText}
+            className="bg-orange-600 hover:bg-orange-700 focus:bg-orange-700 text-white flex items-center justify-around w-full h-12 font-medium text-lg disabled:bg-gray-600 "
+          >
+            {copyStatus || "COPY"}
+          </button>
+        </div>
       </div>
-      <div className="grid grid-rows-desktop-text">
+      <div className="grid grid-rows-desktop-text-output">
         <div className="grid justify-center items-center bg-gray-800">
           <h3 className="text-white font-medium p-2">OUTPUT</h3>
         </div>

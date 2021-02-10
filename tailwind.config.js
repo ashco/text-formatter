@@ -16,7 +16,8 @@ module.exports = {
       },
       gridTemplateRows: {
         mobile: "1fr auto 1fr",
-        "desktop-text": "auto 1fr",
+        "desktop-text-input": "1fr auto",
+        "desktop-text-output": "auto 1fr",
         desktop: "100vh",
       },
       gridTemplateColumns: {
