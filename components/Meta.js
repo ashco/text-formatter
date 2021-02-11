@@ -4,7 +4,7 @@ import Head from "next/head";
 const Meta = () => {
   return (
     <Head>
-      <title>AshCo's Text Formatter</title>
+      <title>AshCo's Formatter</title>
       {/* <link rel="icon" href="/favicon.ico" /> */}
       <link
         rel="apple-touch-icon"

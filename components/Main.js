@@ -149,10 +149,20 @@ const Main = () => {
                 alt="AshCo Icon"
               />
             </a>
-            <div>
+            <div className="relative">
               <h1 className="text-white font-medium text-2xl my-2">
-                Form<span className="underline text-orange-500">a</span>tter
+                Formatter
               </h1>
+              <div
+                className="absolute"
+                style={{
+                  height: "0.15rem",
+                  width: "0.8rem",
+                  top: "2.4rem",
+                  left: "3.4rem",
+                  backgroundColor: "#DF7313",
+                }}
+              />
             </div>
           </span>
           {Object.keys(variables).length > 0 && (
