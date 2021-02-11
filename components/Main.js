@@ -149,9 +149,11 @@ const Main = () => {
                 alt="AshCo Icon"
               />
             </a>
-            <h1 className="text-white font-medium text-2xl my-2">
-              Text Formatter
-            </h1>
+            <div>
+              <h1 className="text-white font-medium text-2xl my-2">
+                Form<span className="underline text-orange-500">a</span>tter
+              </h1>
+            </div>
           </span>
           {Object.keys(variables).length > 0 && (
             <div className="grid gap-2 w-full h-full content-between">
